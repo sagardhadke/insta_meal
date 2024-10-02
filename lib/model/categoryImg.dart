@@ -29,7 +29,7 @@ class CategoryImg {
     }
 
  static List<CategoryImg> ? ofcatimg (List ofData){
-   return ofData.map((e) => CategoryImg.fromJson(e)).toList();
-  }
+  return ofData.map((e) => CategoryImg.fromJson(e)).toList();
+ }
 
 }
