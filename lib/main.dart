@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:insta_meal/view/all_data.dart';
+import 'package:insta_meal/view/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,6 +19,6 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: MyAllDataApi());
+        home: MyHome());
   }
 }

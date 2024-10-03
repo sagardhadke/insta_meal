@@ -76,7 +76,7 @@ class _MyAllDataApiState extends State<MyAllDataApi> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
-                                      MyRecipeDetails(id: recipeId),
+                                      MyRecipeDetails(id: recipeId,catName: ofCategory![i].catName.toString(),),
                                 ),
                               );
                             },

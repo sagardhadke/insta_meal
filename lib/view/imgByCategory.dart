@@ -64,10 +64,10 @@ class _MyImgCategoryState extends State<MyImgCategory> {
                   padding: const EdgeInsets.all(8.0),
                   child: GestureDetector(
                     onTap: (){
-                         final String recipeId = ofrecipes![i].id!;
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) => MyRecipeDetails(id: recipeId),
-                        ),);
+                        //  final String recipeId = ofrecipes![i].id!;
+                      // Navigator.push(context, MaterialPageRoute(
+                      //   builder: (context) => MyRecipeDetails(id: recipeId),
+                      //   ),);
                     },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
