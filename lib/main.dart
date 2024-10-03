@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:insta_meal/view/all_data.dart';
-import 'package:insta_meal/view/foodreDetails.dart';
-import 'package:insta_meal/view/imgByCategory.dart';
 
 void main() {
   runApp(const MyApp());
