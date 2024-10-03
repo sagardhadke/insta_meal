@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:insta_meal/model/childCategory.dart';
 import 'package:insta_meal/model/parentRecipesCat.dart';
 import 'package:insta_meal/view/foodreDetails.dart';
 
@@ -15,6 +16,7 @@ class MyHome extends StatefulWidget {
 
 class _MyHomeState extends State<MyHome> {
   List<ParentRecipesCat>? ofrecipeCat;
+  List<ChildCategory>? ofChildCat;
 
   void getParentCat() async {
     try {
@@ -24,16 +26,29 @@ class _MyHomeState extends State<MyHome> {
         ofrecipeCat =
             ParentRecipesCat.ofrecipeCat(jsonDecode(getParentApi.body));
         setState(() {});
-        print("Response : $ofrecipeCat");
+        print("Parent Response : $ofrecipeCat");
       }
     } catch (e) {
       print(e.toString());
     }
   }
 
+  void getChildCat() async {
+    try {
+      var getchildApi = await http.get(Uri.parse(
+          "https://mapi.trycatchtech.com/v3/healthy_recipes/healthy_recipes_child_category_list?parent_id=1"));
+      if (getchildApi.statusCode == 200) {
+        ofChildCat = ChildCategory.ofChildCat(jsonDecode(getchildApi.body));
+        setState(() {});
+        print("Child API Response : $ofChildCat");
+      }
+    } catch (e) {}
+  }
+
   @override
   void initState() {
     getParentCat();
+    getChildCat();
     super.initState();
   }
 
@@ -84,23 +99,30 @@ class _MyHomeState extends State<MyHome> {
           ),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: ofrecipeCat == null
+            child: ofChildCat == null
                 ? Center(child: CircularProgressIndicator.adaptive())
                 : Row(
                     children: [
-                      for (int i = 0; i < ofrecipeCat!.length; i++) ...{
+                      for (int i = 0; i < ofChildCat!.length; i++) ...{
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(5.0),
                           child: GestureDetector(
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => 
-                              MyRecipeDetails(id: ofrecipeCat![i].id.toString(),catName: ofrecipeCat![i].catName.toString(),)));
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => MyRecipeDetails(
+                                            id: ofChildCat![i].id.toString(),
+                                            catName: ofrecipeCat![i]
+                                                .catName
+                                                .toString(),
+                                          )));
                             },
                             child: Container(
                               decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(20)),
-                              height: 100,
+                              height: 135,
                               width: 90,
                               child: Column(
                                 children: [
@@ -108,7 +130,7 @@ class _MyHomeState extends State<MyHome> {
                                     height: 75,
                                     width: 75,
                                     fit: BoxFit.fill,
-                                    imageUrl: "${ofrecipeCat![i].catImage}",
+                                    imageUrl: "${ofChildCat![i].catImg}",
                                     placeholder: (context, url) => Image.asset(
                                       "assets/dummy-placeholder.png",
                                       width: double.infinity,
@@ -117,7 +139,15 @@ class _MyHomeState extends State<MyHome> {
                                     errorWidget: (context, url, error) =>
                                         Image.asset("assets/insta_meal.png"),
                                   ),
-                                  Text("${ofrecipeCat![i].catName}")
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      "${ofChildCat![i].catName}",
+                                      maxLines: 2,
+                                      textAlign: TextAlign.center,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
