@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:insta_meal/model/parentRecipesCat.dart';
+import 'package:insta_meal/view/foodreDetails.dart';
 
 class MyHome extends StatefulWidget {
   const MyHome({super.key});
@@ -56,7 +57,7 @@ class _MyHomeState extends State<MyHome> {
         ],
         backgroundColor: Colors.green,
       ),
-      backgroundColor: const Color(0xFFD8D8D8),
+      backgroundColor: const Color.fromARGB(255, 234, 234, 234),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -67,45 +68,58 @@ class _MyHomeState extends State<MyHome> {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(
-              "Category",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Category",
+                  style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  "view all",
+                  style: TextStyle(fontSize: 17, color: Colors.green[800]),
+                ),
+              ],
             ),
           ),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: ofrecipeCat == null
-                ? Center(
-                    child: CircularProgressIndicator.adaptive(),
-                  )
+                ? Center(child: CircularProgressIndicator.adaptive())
                 : Row(
                     children: [
                       for (int i = 0; i < ofrecipeCat!.length; i++) ...{
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(20)),
-                            height: 100,
-                            width: 90,
-                            child: Column(
-                              children: [
-                                CachedNetworkImage(
-                                  height: 75,
-                                  width: 75,
-                                  fit: BoxFit.fill,
-                                  imageUrl: "${ofrecipeCat![i].catImage}",
-                                  placeholder: (context, url) => Image.asset(
-                                    "assets/dummy-placeholder.png",
-                                    width: double.infinity,
-                                    fit: BoxFit.cover,
+                          child: GestureDetector(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => 
+                              MyRecipeDetails(id: ofrecipeCat![i].id.toString(),catName: ofrecipeCat![i].catName.toString(),)));
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20)),
+                              height: 100,
+                              width: 90,
+                              child: Column(
+                                children: [
+                                  CachedNetworkImage(
+                                    height: 75,
+                                    width: 75,
+                                    fit: BoxFit.fill,
+                                    imageUrl: "${ofrecipeCat![i].catImage}",
+                                    placeholder: (context, url) => Image.asset(
+                                      "assets/dummy-placeholder.png",
+                                      width: double.infinity,
+                                      fit: BoxFit.cover,
+                                    ),
+                                    errorWidget: (context, url, error) =>
+                                        Image.asset("assets/insta_meal.png"),
                                   ),
-                                  errorWidget: (context, url, error) =>
-                                      Image.asset("assets/insta_meal.png"),
-                                ),
-                                Text("data")
-                              ],
+                                  Text("${ofrecipeCat![i].catName}")
+                                ],
+                              ),
                             ),
                           ),
                         ),
