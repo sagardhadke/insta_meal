@@ -81,4 +81,8 @@ class AllCategories {
         _data["thumb_image"] = thumbImage;
         return _data;
     }
+
+    // static List<AllPosts> ? ofallcategories (List ofData){
+    //   return ofData.map((e) => AllPosts.fromJson(e)).toList();
+    // }
 }

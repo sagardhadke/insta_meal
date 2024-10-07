@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:insta_meal/view/all_data.dart';
 import 'package:insta_meal/view/home.dart';
 
 void main() {
