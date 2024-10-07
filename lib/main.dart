@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:insta_meal/view/home.dart';
+import 'package:insta_meal/view/splash.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,6 +18,6 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: MyHome());
+        home: MySplash());
   }
 }
